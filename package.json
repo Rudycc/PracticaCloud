@@ -16,6 +16,6 @@
     "aws-sdk": "*",
     "lru-cache": "*",
     "porter-stemmer": "*",
-    "async": "*"  
-    }
+    "async": "*"
+  }
 }

@@ -43,9 +43,11 @@ app.get('/search/:word', function(req, res) {
       console.log("getAttributes() returned no results");
       res.send(JSON.stringify({results: [], num_results: 0, error: undefined}));
     } else {
+      // Crear un arreglo con las promesas de imagenes
       let promises = data.map(attribute => images.get(attribute.value))
 
       Promise.all(promises).then(foundImages => {
+        // Crea arreglo nuevo descomponiendo cada objeto y regresando solo value
         let results = foundImages.map(([{value}]) => value)
         res.send(JSON.stringify({results, num_results: results.length, error: undefined}));
       }).catch(console.log)

@@ -1,7 +1,9 @@
   const AWS = require('aws-sdk');
   AWS.config.loadFromPath('./config.json');
 
+  //Este simplifica la estructura que deben llevar las llamadas a Dynamo, asi como la estructura de la respuesta
   const db = new AWS.DynamoDB.DocumentClient();
+  //Utilizado para revisar si la tabla existe
   const db2 = new AWS.DynamoDB()
 
   function keyvaluestore(table) {
@@ -46,6 +48,7 @@ keyvaluestore.prototype.get = function(search) {
         }
 
         db.query(params).promise().then(data => {
+          //Descomponer cada objeto del arreglo y construir nuevo objeto con los atributos necesarios
           let items = data.Items.map(({ inx, value, keyword: key }) => ({ inx, value, key,}))
           this.cache.set(search, items)
           resolve(items)
